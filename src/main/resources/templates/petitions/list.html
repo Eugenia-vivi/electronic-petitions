@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Петиції</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>📋 Петиції</h1>
+        <a th:href="@{/petitions}">Головна</a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <span class="page-title">Всі петиції</span>
+            <a th:href="@{/petitions/new}" class="btn btn-primary">+ Створити петицію</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(petitions)}" class="empty-state">
+            <p>Петицій поки немає</p>
+            <a th:href="@{/petitions/new}" class="btn btn-primary">Створити першу</a>
+        </div>
+
+        <div class="petition-list" th:unless="${#lists.isEmpty(petitions)}">
+            <div class="petition-card" th:each="petition : ${petitions}">
+                <h3>
+                    <a th:href="@{/petitions/{id}(id=${petition.id})}"
+                       th:text="${petition.title}"></a>
+                </h3>
+                <div class="meta">
+                    <span>✍️ <span th:text="${petition.author}"></span></span>
+                    <span>📅 <span th:text="${petition.createdAt}"></span></span>
+                    <span class="vote-badge">👍 <span th:text="${petition.voteCount}"></span> голосів</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <p>Система петицій © 2026</p>
+</footer>
+
+</body>
+</html>

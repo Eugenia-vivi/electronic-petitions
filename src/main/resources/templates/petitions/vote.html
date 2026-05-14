@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Голосування</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>📋 Петиції</h1>
+        <a th:href="@{/petitions/{id}(id=${petition.id})}">← Назад</a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        <div class="page-title">Голосування</div>
+
+        <div class="form-card">
+            <h3 th:text="${petition.title}" style="margin-bottom:8px; color:#2c3e50;"></h3>
+            <p th:text="${petition.description}"
+               style="color:#888; font-size:14px; margin-bottom:24px;"></p>
+
+            <form th:action="@{/petitions/{id}/vote(id=${petition.id})}" method="post">
+
+                <div class="form-group">
+                    <label>Ваше ім'я</label>
+                    <input type="text" name="voterName" placeholder="Введіть ваше ім'я">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">👍 Проголосувати</button>
+                    <a th:href="@{/petitions/{id}(id=${petition.id})}"
+                       class="btn btn-secondary">Скасувати</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <p>Система петицій © 2026</p>
+</footer>
+
+</body>
+</html>
