@@ -1,60 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${petition.title}">Петиція</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'⚡ ' + ${petition.title} + ' — Електронні петиції'">⚡ Електронні петиції</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}">
+    <link rel="alternate icon" th:href="@{/favicon.svg}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-<header>
-    <div class="container">
-        <h1>📋 Петиції</h1>
-        <a th:href="@{/petitions}">← Назад до списку</a>
+<div class="container">
+    <div style="margin-bottom: 1.5rem;">
+        <a class="btn" th:href="@{/petitions}">← До всіх петицій</a>
     </div>
-</header>
 
-<main>
-    <div class="container">
+    <div class="card">
+        <span class="brand-badge" style="background: var(--accent-purple);">Офіційна ініціатива</span>
+        <h1 style="margin: 0.5rem 0 1rem 0;" th:text="${petition.title}">Заголовок петиції</h1>
 
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
-
-        <div class="petition-detail">
-
-            <h2 th:text="${petition.title}"></h2>
-
-            <div class="petition-meta">
-                <span>✍️ Автор: <strong th:text="${petition.author}"></strong></span>
-                <span>📅 <span th:text="${petition.createdAt}"></span></span>
+        <div class="vote-counter-box" style="background: #fffdf0;">
+            <span class="vote-number" th:text="${petition.votes != null ? petition.votes.size() : 0}">0</span>
+            <div>
+                <h3>Громадян підтримали ініціативу</h3>
+                <p style="font-size: 0.9rem;">Приєднуйтесь до збору підписів просто зараз</p>
             </div>
+        </div>
 
-            <p class="description" th:text="${petition.description}"></p>
+        <div class="petition-body" th:text="${petition.description}">
+            Повний текст петиції та аргументація вимог...
+        </div>
 
-            <div class="vote-count-block">
-                <span class="number" th:text="${petition.voteCount}"></span>
-                <div class="label">голосів<br>зібрано</div>
-            </div>
+        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: var(--border-thick); display: flex; gap: 1rem;">
+            <a class="btn btn-primary" th:href="@{/petitions/{id}/vote(id=${petition.id})}">Підписати цю петицію ✍️</a>
 
-            <div class="petition-actions">
-                <a th:href="${voteUrl}" class="btn btn-primary">👍 Проголосувати</a>
-
-                <form th:action="@{/petitions/{id}/delete(id=${petition.id})}" method="post"
-                      style="display:inline;">
-                    <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Видалити цю петицію?')">
-                        🗑 Видалити
-                    </button>
-                </form>
-            </div>
-
+        <footer class="site-footer">
+            <div>© 2026 <strong>vinedyss</strong></div>
+            <div>⚡ Платформа електронних петицій</div>
+        </footer>
         </div>
     </div>
-</main>
-
-<footer>
-    <p>Система петицій © 2026</p>
-</footer>
-
+</div>
 </body>
 </html>
